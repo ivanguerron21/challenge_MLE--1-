@@ -39,5 +39,5 @@ jobs:
         docker push gcr.io/$PROJECT_ID/$APP_ID:1.0.0
         gcloud run deploy $APP_ID --image gcr.io/$PROJECT_ID/$APP_ID:1.0.0
     
-    - name: Run stress test
+    - name: Run the stress test
       run: make stress-test
