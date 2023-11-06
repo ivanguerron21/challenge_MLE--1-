@@ -29,13 +29,21 @@ jobs:
     - name: Configure gcd
       run: gcloud auth configure-docker us-central1-docker.pkg.dev
       
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.NAMESPACE }}
+        password: ${{ secrets.KEY }}
+      
     - name: Build Docker Image
       run: |
         docker build -t $NAMESPACE/$APP_ID:1.0.0 .
-        docker tag $NAMESPACE/$APP_ID:1.0.0 us-central1-docker.pkg.dev/$PROJECT_ID/$APP_ID:1.0.0
         
     - name: Push Docker Image
-      run: docker push us-central1-docker.pkg.dev/$PROJECT_ID/$APP_ID:1.0.0
+      run: docker push $NAMESPACE/$APP_ID:1.0.0
         
     - name: Deploy
       run: gcloud run deploy $APP_ID --image us-central1-docker.pkg.dev/$PROJECT_ID/$APP_ID:1.0.0
