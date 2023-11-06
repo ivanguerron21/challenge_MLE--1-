@@ -27,16 +27,16 @@ jobs:
         export_default_credentials: true
         
     - name: Configure gcd
-      run: gcloud auth configure-docker demo
+      run: gcloud auth configure-docker us-central1-docker.pkg.dev
       
     - name: Build Docker Image
-      run: docker build -t demo/$NAMESPACE/$APP_ID:1.0.0 .
+      run: docker build -t us-central1-docker.pkg.dev/$NAMESPACE/$APP_ID:1.0.0 .
       
     - name: Push Docker Image
-      run: docker push demo/$NAMESPACE/$APP_ID:1.0.0
+      run: docker push us-central1-docker.pkg.dev/$NAMESPACE/$APP_ID:1.0.0
         
     - name: Deploy
-      run: gcloud run deploy $APP_ID --image demo/$NAMESPACE/$APP_ID:1.0.0
+      run: gcloud run deploy $APP_ID --image us-central1-docker.pkg.dev/$NAMESPACE/$APP_ID:1.0.0
     
     - name: Run stress test
       run: make stress-test
