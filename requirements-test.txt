@@ -1,4 +1,7 @@
 locust~=1.6
+werkzeug==2.0.3
+jinja2<3.1.0
+itsdangerous==2.0.1
 coverage~=5.5
 pytest~=6.2.5
 pytest-cov~=2.12.1
