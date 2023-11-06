@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  NAMESPACE: ${{ secrets.NAMESPACE }}
   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
   APP_ID: ${{ secrets.APP_ID }}
 
@@ -29,15 +29,13 @@ jobs:
       run: gcloud auth configure-docker us-central1-docker.pkg.dev
       
     - name: Build Docker Image
-      run: docker build -t us-central1-docker.pkg.dev/$PROJECT_ID/$APP_ID:1.0.0 .
+      run: docker build -t us-central1-docker.pkg.dev/$NAMESPACE/$APP_ID:1.0.0 .
       
     - name: Push Docker Image
-      run: |
-        gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
-        docker push us-central1-docker.pkg.dev/$PROJECT_ID/$APP_ID:1.0.0
+      run: docker push us-central1-docker.pkg.dev/$NAMESPACE/$APP_ID:1.0.0
         
     - name: Deploy
-      run: gcloud run deploy $APP_ID --image us-central1-docker.pkg.dev/$PROJECT_ID/$APP_ID:1.0.0
+      run: gcloud run deploy $APP_ID --image us-central1-docker.pkg.dev/$NAMESPACE/$APP_ID:1.0.0
     
     - name: Run stress test
       run: make stress-test
