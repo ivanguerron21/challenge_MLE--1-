@@ -18,16 +18,6 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-
-    - name: Configure Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v0.2.1
-      with:
-        project_id: ${{ secrets.PROJECT_ID }}
-        service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-        export_default_credentials: true
-        
-    - name: Configure gcd
-      run: gcloud auth configure-docker gcr.io
       
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
@@ -37,16 +27,26 @@ jobs:
       with:
         username: ${{ secrets.NAMESPACE }}
         password: ${{ secrets.KEY }}
-      
+
     - name: Build Docker Image
       run: |
         docker build -t $NAMESPACE/$APP_ID:1.0.0 .
         
     - name: Push Docker Image
       run: docker push $NAMESPACE/$APP_ID:1.0.0
+
+    - name: Configure Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0.2.1
+      with:
+        project_id: ${{ secrets.PROJECT_ID }}
+        service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        export_default_credentials: true
+        
+    - name: Configure gcd
+      run: gcloud auth configure-docker us-central1-docker.pkg.dev
         
     - name: Deploy
-      run: gcloud run deploy $APP_ID --image gcr.io/$PROJECT_ID/$APP_ID:1.0.0 --region us-central1
+      run: gcloud run deploy $APP_ID --image us-central1-docker.pkg.dev/$PROJECT_ID/$APP_ID:1.0.0 --platform managed --region us-central1
     
     - name: Run stress test
       run: make stress-test
