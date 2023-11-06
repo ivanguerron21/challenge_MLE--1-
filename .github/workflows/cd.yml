@@ -46,7 +46,7 @@ jobs:
       run: docker push $NAMESPACE/$APP_ID:1.0.0
         
     - name: Deploy
-      run: gcloud run deploy $APP_ID --image $NAMESPACE/$APP_ID:1.0.0
+      run: gcloud run deploy $APP_ID --image $NAMESPACE/$APP_ID:1.0.0 --region us-central1
     
     - name: Run stress test
       run: make stress-test
