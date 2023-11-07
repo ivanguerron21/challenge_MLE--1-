@@ -1,31 +1,25 @@
+Note: Some dependencies were updated since proposed versions were giving errors.
+
 ### Part I
 
 - The model passes the tests by running `make model-test`.
-
-> **Note:**
-> - **You cannot** remove or change the name or arguments of **provided** methods.
-> - **You can** change/complete the implementation of the provided methods.
-> - **You can** create the extra classes and methods you deem necessary.
+(Some small changes were made for the jupyter file).
+Worked with the given parameters, although adding some to the constructor and functions would have made a more generalizable and smooth code.
 
 ### Part II
 
 
 - The `API` passes the tests by running `make api-test`.
 
-> **Note:** 
-> - **You cannot** use other framework.
 
 ### Part III
 
 Deployed on google cloud run service
 - The `API` passes the tests by running `make stress-test`.
 
-> **Note:** 
-> - **It is important that the API is deployed until we review the tests.**
-
 ### Part IV
 
-We are looking for a proper `CI/CD` implementation for this development.
+`CI/CD` implementation for this development.
 
 CD deploys and CI tests.
 
