@@ -19,21 +19,21 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
       
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    # - name: Set up Docker Buildx
+    #   uses: docker/setup-buildx-action@v3
       
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.NAMESPACE }}
-        password: ${{ secrets.KEY }}
+    # - name: Login to Docker Hub
+    #   uses: docker/login-action@v3
+    #   with:
+    #     username: ${{ secrets.NAMESPACE }}
+    #     password: ${{ secrets.KEY }}
 
-    - name: Build Docker Image
-      run: |
-        docker build -t $NAMESPACE/$APP_ID:1.0.0 .
+    # - name: Build Docker Image
+    #   run: |
+    #     docker build -t $NAMESPACE/$APP_ID:1.0.0 .
         
-    - name: Push Docker Image
-      run: docker push $NAMESPACE/$APP_ID:1.0.0
+    # - name: Push Docker Image
+    #   run: docker push $NAMESPACE/$APP_ID:1.0.0
 
     - name: Configure Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v0.2.1
@@ -46,7 +46,7 @@ jobs:
     #   run: gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
         
     - name: Deploy
-      run: gcloud run deploy $APP_ID --image gcr.io/$NAMESPACE/$APP_ID:1.0.0 --platform managed --region us-central1
+      run: gcloud run deploy docker-challenge-latam --image gcr.io/ivanguerron21/docker-challenge-latam:1.0.0 --platform managed --region us-central1
     
     - name: Run stress test
       run: make stress-test
