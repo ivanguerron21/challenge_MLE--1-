@@ -42,8 +42,8 @@ jobs:
         service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         export_default_credentials: true
         
-    # - name: Configure gcd
-    #   run: gcloud auth configure-docker us-central1-docker.pkg.dev
+    - name: Configure gcd
+      run: gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
         
     - name: Deploy
       run: gcloud run deploy $APP_ID --image gcr.io/$PROJECT_ID/$APP_ID:1.0.0 --platform managed --region us-central1
