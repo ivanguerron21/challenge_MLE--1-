@@ -46,7 +46,7 @@ jobs:
     #   run: gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
         
     - name: Deploy
-      run: gcloud run deploy docker-challenge-latam --image gcr.io/ivanguerron21/docker-challenge-latam:1.0.0 --platform managed --region us-central1
+      run: gcloud run deploy docker-challenge-latam --image ivanguerron21/docker-challenge-latam:1.0.0 --platform managed --region us-central1
     
     - name: Run stress test
       run: make stress-test
